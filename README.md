@@ -58,6 +58,21 @@ As a SOC Analyst, your mission is to investigate the provided **PCAP** file to t
 
 ---
 
+## Wireshark Display Filters for PsExec Hunt CTF
+
+| Question | Wireshark Filter                   | Description                                         |
+|----------|----------------------------------|-----------------------------------------------------|
+| Q1       | `smb.cmd == 0x72 or smb2.cmd == 0x00` | Shows SMB negotiation packets to find initial source IP connected via SMB protocol. |
+| Q2       | `ntlmssp.challenge.target_name`  | Displays NTLMSSP challenge messages to reveal target hostnames. |
+| Q3       | `ntlmssp.auth.username`           | Extracts usernames from NTLMSSP authentication messages. |
+| Q4       | *(No direct filter)*              | Use **File > Export Objects > SMB** to view files transferred, find `psexesvc` executable. |
+| Q5       | `smb2.tree == "ADMIN$"`           | Filters SMB traffic to the `ADMIN$` administrative share. |
+| Q6       | `smb2.tree == "IPC$"`             | Filters SMB traffic on the `IPC$` share used for inter-machine communication. |
+| Q7       | `ntlmssp.challenge.target_name`  | Same as Q2 — identifies hostname of the second pivot target. |
+
+
+
+
 ## Learning Outcomes
 - How to identify **SMB-based lateral movement** in PCAP data.  
 - Using **Wireshark filters** to extract NTLMSSP authentication details.  
